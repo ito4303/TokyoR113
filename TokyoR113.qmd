@@ -1,0 +1,34 @@
+---
+title: "Rで生物多様性情報を取得する"
+subtitle: 第113回Tokyo.R
+author: "伊東宏樹"
+date: 2024-06-08
+format: revealjs
+editor: visual
+---
+
+## 自己紹介
+
+氏名: 伊東宏樹
+
+## 生物多様性
+
+生物多様性
+
+## GBIF
+
+> GBIF—the Global Biodiversity Information Facility—is an international network and data infrastructure funded by the world's governments and aimed at providing anyone, anywhere, open access to data about all types of life on Earth.
+
+::: {style="text-align: right;"}
+([What is GBIF?](https://www.gbif.org/what-is-gbif))
+:::
+
+## rgbifパッケージ
+
+-   <https://cran.r-project.org/package=rgbif>
+
+-   GBIFからデータを取得
+
+## 例（コウノトリ）
+
+コウノトリ
