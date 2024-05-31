@@ -4,16 +4,39 @@ subtitle: 第113回Tokyo.R
 author: "伊東宏樹"
 date: 2024-06-08
 format: revealjs
+embed-resources: true
 editor: visual
 ---
 
 ## 自己紹介
 
-氏名: 伊東宏樹
+-   氏名: 伊東宏樹
+
+-   3月まで森林総合研究所勤務
+
+-   4月から個人事業主（[伊東生態統計研究室](https://ito4303.sakura.ne.jp/)）
+
+-   データ解析、執筆・翻訳、研修講師などお引き受けいたします。
+
+## Kanazawa.R
+
+![](images/KanazawaR.jpg)
+
+-   石川県金沢市でのR勉強会
+
+-   いままでないようなので、やってみることにしました。
+
+-   6月29日開催（現地+オンライン）
+
+-   詳細はconnpassのイベントページ [Kanazawa.R #1](https://kanazawar.connpass.com/event/320817/) にて
 
 ## 生物多様性
 
-生物多様性
+-   遺伝子・種・生態系での多様性
+
+-   生態系サービスの基盤
+
+-   企業活動においても、TNFD（自然関連財務情報開示タスクフォース）などで生物多様性保全への貢献の報告が求められるように
 
 ## GBIF
 
@@ -23,12 +46,78 @@ editor: visual
 ([What is GBIF?](https://www.gbif.org/what-is-gbif))
 :::
 
+-   地球上の生物の存在記録（標本や観察データなど）の集積と公開
+
 ## rgbifパッケージ
 
--   <https://cran.r-project.org/package=rgbif>
-
--   GBIFからデータを取得
+-   URL:
+    -   <https://cran.r-project.org/package=rgbif>
+    -   <https://docs.ropensci.org/rgbif/> （ドキュメント）
+-   GBIFとのインターフェイス
+    -   `occ_download`関数でデータ取得（要GBIFアカウント, [Set Up Your GBIF Username and Password](https://docs.ropensci.org/rgbif/articles/gbif_credentials.html)）
 
 ## 例（コウノトリ）
 
-コウノトリ
+![](images/IMG_6023.jpeg)
+
+2005年に野生復帰、現在も絶滅危惧種
+
+## コウノトリはどこにいる（いた）のか
+
+GBIFのデータを取得して地図化
+
+```{r}
+#| label: setup
+#| echo: false
+
+library(rgbif)
+library(leaflet)
+```
+
+## データ取得
+
+```{r}
+#| label: get_data
+#| cache: true
+
+species_data <- name_backbone("Ciconia boyciana")  # コウノトリの学名
+taxon_key <- species_data$usageKey
+occ_info <- occ_download(pred("taxonKey", taxon_key),  # コウノトリ
+                         pred("country", "JP"),        # 日本で
+                         pred("hasCoordinate", TRUE))  # 位置情報のあるもの
+(meta <- occ_download_meta(occ_info))
+```
+
+## 引用情報
+
+GBIFデータの使用にあたっては[DOIの引用](https://docs.ropensci.org/rgbif/articles/gbif_citations.html)が義務となっています。
+
+```{r}
+#| label: doi
+
+gbif_citation(meta$key)$download
+```
+
+## データのダウンロード
+
+```{r}
+#| label: download
+#| cache: true
+
+x <- occ_download_get(occ_info)
+df <- occ_download_import(x)
+```
+
+## 地図表示
+
+```{r}
+#| label: map
+#| echo: false
+
+leaflet() |>
+  addTiles() |>
+  setView(lng = 135, lat = 35, zoom = 5) |>
+  addCircleMarkers(lng = df$decimalLongitude,
+                   lat = df$decimalLatitude,
+                   radius = 5)
+```
