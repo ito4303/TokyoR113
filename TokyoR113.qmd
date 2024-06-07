@@ -18,6 +18,8 @@ editor: visual
 
 -   データ解析、執筆・翻訳、研修講師などお引き受けいたします。
 
+-   出版物: 『[BUGSで学ぶ階層モデリング入門](https://www.kyoritsu-pub.co.jp/book/b10003729.html)』『[生態学のための階層モデリング](https://www.kyoritsu-pub.co.jp/book/b10003301.html)』（以上共訳）など
+
 ## Kanazawa.R
 
 ![](images/KanazawaR.jpg)
