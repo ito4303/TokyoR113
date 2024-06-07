@@ -105,12 +105,14 @@ gbif_citation(meta$key)
 #| echo: true
 #| cache: true
 
-occ_download_wait(occ_info)
-x <- occ_download_get(occ_info)
-df <- occ_download_import(x)
+occ_download_wait(occ_info)      # 準備ができるまで待つ
+x <- occ_download_get(occ_info)  # ファイルをダウンロード
+df <- occ_download_import(x)     # ダウンロードしたファイルを読み込む
 ```
 
 ## 地図表示
+
+コウノトリの出現場所をleafletで表示
 
 ```{r}
 #| label: map
